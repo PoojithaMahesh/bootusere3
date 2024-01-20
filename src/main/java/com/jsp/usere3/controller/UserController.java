@@ -43,10 +43,24 @@ public class UserController {
 		return service.updateUser(id,user);
 	}
 	
-	
 	@GetMapping("/findall")
 	public ResponseEntity<ResponseStructure<List<User>>> findAllSTudents(){
 		return service.findAllStudents();
 	}
+	
+	@GetMapping("/findbyname")
+    public ResponseEntity<ResponseStructure<List<User>>> findStudentByName(@RequestParam String name){
+		return service.findStudentByName(name);
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

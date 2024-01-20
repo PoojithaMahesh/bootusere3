@@ -53,4 +53,12 @@ public class UserDao {
 		return repo.findAll();
 	}
 
+	public List<User> findUserByName(String name) {
+		Optional<List<User>> optional=repo.findByName(name);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
+
 }

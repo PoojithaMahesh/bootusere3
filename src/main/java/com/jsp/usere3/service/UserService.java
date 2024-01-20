@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jsp.usere3.dao.UserDao;
 import com.jsp.usere3.dto.User;
+import com.jsp.usere3.exception.UserIdNOtFOundException;
 import com.jsp.usere3.util.ResponseStructure;
 
 @Service
@@ -37,11 +38,7 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.FOUND);
 		} else {
 //			id is not present
-			ResponseStructure<User> structure = new ResponseStructure<User>();
-			structure.setMessage("Data NOT Found");
-			structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
-			structure.setData(null);
-			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.NOT_FOUND);
+			throw new UserIdNOtFOundException("Sorry failed to fetch the data");
 		}
 	}
 
@@ -56,11 +53,7 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.FOUND);
 		} else {
 //			id is not present
-			ResponseStructure<User> structure = new ResponseStructure<User>();
-			structure.setMessage("Data NOT Found");
-			structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
-			structure.setData(null);
-			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.NOT_FOUND);
+			throw new UserIdNOtFOundException("Sorry failed to delete the data");
 		}
 	}
 
@@ -75,11 +68,7 @@ public class UserService {
 			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.OK);
 		} else {
 //			id is not present
-			ResponseStructure<User> structure = new ResponseStructure<User>();
-			structure.setMessage("Data NOT Found");
-			structure.setHttpStatus(HttpStatus.NOT_FOUND.value());
-			structure.setData(null);
-			return new ResponseEntity<ResponseStructure<User>>(structure, HttpStatus.NOT_FOUND);
+			throw new UserIdNOtFOundException("Sorry failed to update the data");
 		}
 	}
 
@@ -90,6 +79,26 @@ public class UserService {
 		structure.setHttpStatus(HttpStatus.FOUND.value());
 		structure.setData(list);
 		return new ResponseEntity<ResponseStructure<List<User>>>(structure, HttpStatus.FOUND);
+	}
+
+	public ResponseEntity<ResponseStructure<List<User>>> findStudentByName(String name) {
+	    List<User> users =dao.findUserByName(name);
+	    
+	    if(users.isEmpty()) {
+//	    	user is not present with that name
+	    	return null;
+	    }else {
+	    	ResponseStructure<List<User>> structure=new ResponseStructure<>();
+			structure.setMessage("Data fetched successfully");
+			structure.setHttpStatus(HttpStatus.FOUND.value());
+			structure.setData(users);
+			return new ResponseEntity<ResponseStructure<List<User>>>(structure, HttpStatus.FOUND);
+	    }
+	    
+	    
+	    
+	    
+		
 	}
 
 }
